@@ -1,0 +1,37 @@
+{
+    "name": "ffhome/php-common",
+    "description": "php common utility.",
+    "keywords": [
+        "common"
+    ],
+    "homepage": "http://ffhome.top/",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "john.shen",
+            "email": "john.shen@foxmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "files": [],
+        "psr-4": {
+            "ffhome\\common\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ffhome\\tests\\common\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    }
+}
