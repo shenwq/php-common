@@ -7,6 +7,12 @@ use PHPUnit\Framework\TestCase;
 
 class CommonUtilTest extends TestCase
 {
+    public function testPassword()
+    {
+        $this->assertEquals('2c6c5a6b1a2429da237285b1e0b33eef', CommonUtil::password('password'));
+        $this->assertEquals('88e349eede9223bd25ab30c2f0f3cf80', CommonUtil::password('123456'));
+    }
+
     public function testGetTree()
     {
         $param = [

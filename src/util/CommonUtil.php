@@ -5,6 +5,17 @@ namespace ffhome\common\util;
 class CommonUtil
 {
     /**
+     * 密码加密算法
+     * @param $value 需要加密的值
+     * @return string
+     */
+    public static function password($value)
+    {
+        $value = 'ffhome_' . md5($value) . '_encrypt' . sha1($value);
+        return md5($value);
+    }
+
+    /**
      * 将list转换成树形结构
      * @param array $list
      * @param int $rootId 根id
