@@ -78,4 +78,12 @@ class CommonUtilTest extends TestCase
         $ret = CommonUtil::getPrefixArray($param, 'user_');
         $this->assertEquals($result, $ret);
     }
+
+    public function testHttp()
+    {
+        $ret = CommonUtil::http('https://ip.ffhome.top/ip/49.72.197.2');
+        $this->assertEquals('江苏', $ret['region']);
+        $this->assertEquals('苏州', $ret['city']);
+        print_r($ret);
+    }
 }
