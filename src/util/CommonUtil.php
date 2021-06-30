@@ -170,4 +170,79 @@ class CommonUtil
 
         return json_decode($data, true);
     }
+
+    /**
+     * 导出Word,html格式
+     * @param $content 内容
+     * @param string $fileName 文件名
+     */
+    public static function exportWord($content, $fileName = '')
+    {
+        if (empty($fileName)) {
+            $fileName = date('YmdHis');
+        }
+
+        header("Content-type:application/msword");
+        header("Content-Disposition:attachment; filename={$fileName}.doc");
+
+        echo "<!DOCTYPE html>\n";
+        echo "<html xmlns:v=\"urn:schemas-microsoft-com:vml\"";
+        echo " xmlns:o=\"urn:schemas-microsoft-com:office:office\"";
+        echo " xmlns:w=\"urn:schemas-microsoft-com:office:word\"";
+        echo " xmlns:m=\"http://schemas.microsoft.com/office/2004/12/omml\"";
+        echo " xmlns=\"http://www.w3.org/TR/REC-html40\">\n";
+        echo "<head>\n";
+        echo "<!--[if gte mso 9]>";
+        echo "<xml>";
+        echo "<w:WordDocument>";
+        echo "<w:View>Print</w:View>";
+        echo "<w:TrackMoves>false</w:TrackMoves>";
+        echo "<w:TrackFormatting/>";
+        echo "<w:ValidateAgainstSchemas/>";
+        echo "<w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>";
+        echo "<w:IgnoreMixedContent>false</w:IgnoreMixedContent>";
+        echo "<w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>";
+        echo "<w:DoNotPromoteQF/>";
+        echo "<w:LidThemeOther>EN-US</w:LidThemeOther>";
+        echo "<w:LidThemeAsian>ZH-CN</w:LidThemeAsian>";
+        echo "<w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>";
+        echo "<w:Compatibility>";
+        echo "<w:BreakWrappedTables/>";
+        echo "<w:SnapToGridInCell/>";
+        echo "<w:WrapTextWithPunct/>";
+        echo "<w:UseAsianBreakRules/>";
+        echo "<w:DontGrowAutofit/>";
+        echo "<w:SplitPgBreakAndParaMark/>";
+        echo "<w:DontVertAlignCellWithSp/>";
+        echo "<w:DontBreakConstrainedForcedTables/>";
+        echo "<w:DontVertAlignInTxbx/>";
+        echo "<w:Word11KerningPairs/>";
+        echo "<w:CachedColBalance/>";
+        echo "<w:UseFELayout/>";
+        echo "</w:Compatibility>";
+        echo "<w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>";
+        echo "<m:mathPr>";
+        echo "<m:mathFont m:val=\"Cambria Math\"/>";
+        echo "<m:brkBin m:val=\"before\"/>";
+        echo "<m:brkBinSub m:val=\"--\"/>";
+        echo "<m:smallFrac m:val=\"off\"/>";
+        echo "<m:dispDef/>";
+        echo "<m:lMargin m:val=\"0\"/>";
+        echo "<m:rMargin m:val=\"0\"/>";
+        echo "<m:defJc m:val=\"centerGroup\"/>";
+        echo "<m:wrapIndent m:val=\"1440\"/>";
+        echo "<m:intLim m:val=\"subSup\"/>";
+        echo "<m:naryLim m:val=\"undOvr\"/>";
+        echo "</m:mathPr>";
+        echo "</w:WordDocument>";
+        echo "</xml>";
+        echo "<![endif]-->\n";
+        echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n";
+        echo "<title>{$fileName}</title>\n";
+        echo "</head>\n";
+        echo "<body>{$content}</body>\n";
+        echo "</html>";
+
+        exit();
+    }
 }
