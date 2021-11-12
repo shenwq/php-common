@@ -13,6 +13,11 @@ class CommonUtilTest extends TestCase
         $this->assertEquals('88e349eede9223bd25ab30c2f0f3cf80', CommonUtil::password('123456'));
     }
 
+    public function testFormatText()
+    {
+        $this->assertEquals('我是John,年龄:32', CommonUtil::formatText('我是{$name},年龄:{$age}', ['name' => 'John', 'age' => 32]));
+    }
+
     public function testGetTree()
     {
         $param = [

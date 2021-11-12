@@ -6,13 +6,27 @@ class CommonUtil
 {
     /**
      * 密码加密算法
-     * @param $value 需要加密的值
+     * @param string $value 需要加密的值
      * @return string
      */
     public static function password($value)
     {
         $value = 'ffhome_' . md5($value) . '_encrypt' . sha1($value);
         return md5($value);
+    }
+
+    /**
+     * 将str的参数使用data的数据进行替换
+     * @param $str string
+     * @param $data array
+     * @return string
+     */
+    public static function formatText($str, $data)
+    {
+        foreach ($data as $key => $v) {
+            $$key = $v;
+        }
+        return eval('return "' . $str . '";');
     }
 
     /**
@@ -92,7 +106,7 @@ class CommonUtil
 
     /**
      * 获取真实IP
-     * @return mixed
+     * @return string
      */
     public static function getRealIp()
     {
@@ -116,6 +130,7 @@ class CommonUtil
 
     /**
      * 获取当前页面完整URL地址
+     * @return string
      */
     public static function getUrl()
     {
@@ -173,7 +188,7 @@ class CommonUtil
 
     /**
      * 导出Word,html格式
-     * @param $content 内容
+     * @param string $content 内容
      * @param string $fileName 文件名
      */
     public static function exportWord($content, $fileName = '')
