@@ -1,4 +1,5 @@
 <?php
+declare (strict_types=1);
 
 namespace ffhome\common\util;
 
@@ -9,7 +10,7 @@ class CommonUtil
      * @param string $value 需要加密的值
      * @return string
      */
-    public static function password($value)
+    public static function password(string $value): string
     {
         $value = 'ffhome_' . md5($value) . '_encrypt' . sha1($value);
         return md5($value);
@@ -21,7 +22,7 @@ class CommonUtil
      * @param $data array
      * @return string
      */
-    public static function formatText($str, $data)
+    public static function formatText(string $str, array $data): string
     {
         foreach ($data as $key => $v) {
             $$key = $v;
@@ -38,14 +39,16 @@ class CommonUtil
      * @param string $childName 子键名称
      * @return array
      */
-    public static function getTree($list, $rootId = 0, $keyName = 'id', $parentKeyName = 'pid', $childName = 'child')
+    public static function getTree(array $list, int $rootId = 0, string $keyName = 'id', string $parentKeyName = 'pid'
+        , string $childName = 'child'): array
     {
         $root = [$keyName => $rootId];
         self::buildTree($list, $root, $keyName, $parentKeyName, $childName);
         return $root[$childName];
     }
 
-    private static function buildTree($list, &$node, $keyName, $parentKeyName, $childName)
+    private static function buildTree(array $list, array &$node, string $keyName, string $parentKeyName
+        , string $childName): void
     {
         $child = [];
         foreach ($list as $v) {
@@ -66,7 +69,7 @@ class CommonUtil
      * @param string $key key的键名
      * @return array
      */
-    public static function convertToArray($list, $val, $key = '')
+    public static function convertToArray(array $list, string $val, string $key = ''): array
     {
         if (empty($list) || empty($val)) {
             return [];
@@ -88,7 +91,7 @@ class CommonUtil
      * @param string $prefix 前缀名称
      * @return array
      */
-    public static function getPrefixArray($list, $prefix)
+    public static function getPrefixArray(array $list, string $prefix): array
     {
         if (empty($list)) {
             return [];
@@ -108,7 +111,7 @@ class CommonUtil
      * 获取真实IP
      * @return string
      */
-    public static function getRealIp()
+    public static function getRealIp(): string
     {
         $ip = $_SERVER['REMOTE_ADDR'];
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $_SERVER['HTTP_X_FORWARDED_FOR'], $matches)) {
@@ -132,7 +135,7 @@ class CommonUtil
      * 获取当前页面完整URL地址
      * @return string
      */
-    public static function getUrl()
+    public static function getUrl(): string
     {
         $sys_protocol = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
         $php_self = $_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME'];
@@ -149,7 +152,7 @@ class CommonUtil
      * @param string $method 请求方法GET/POST
      * @return array          响应数据
      */
-    public static function http($url, $param = [], $data = '', $method = 'GET')
+    public static function http(string $url, array $param = [], $data = '', string $method = 'GET'): array
     {
         $opts = array(
             CURLOPT_TIMEOUT => 30,
@@ -191,7 +194,7 @@ class CommonUtil
      * @param string $content 内容
      * @param string $fileName 文件名
      */
-    public static function exportWord($content, $fileName = '')
+    public static function exportWord(string $content, string $fileName = ''): void
     {
         if (empty($fileName)) {
             $fileName = date('YmdHis');
