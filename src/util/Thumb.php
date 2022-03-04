@@ -30,12 +30,13 @@ class Thumb
 
     /**
      * 直接压缩原图，文件名必须以"/upload/"开始
+     *  压缩后的图片会出现t_前缀
      * @param string $fileName
      */
     public static function compress(string $fileName)
     {
         $fileName = 'upload/' . self::getSubFileName($fileName);
-        self::make($fileName, '', 0, 0, 1, true);
+        return '/' . self::make($fileName, '', 0, 0, 1, true);
     }
 
     /**
@@ -101,14 +102,14 @@ class Thumb
 
         // 判断源文件是否是图片格式
         if (!is_file($from)) {
-            return false;
+            return $from;
         }
         $imageInfo = getimagesize($from);
         if ($imageInfo === false) {
-            return false;
+            return $from;
         }
         if ($imageInfo[2] > 3) {
-            return false;
+            return $from;
         }
 
         if ($replace) {
@@ -116,7 +117,7 @@ class Thumb
             $index = strrpos($from, '/');
             $path = substr($from, 0, $index);
             $fileName = substr($from, $index + 1);
-            $to = "{$path}/new_{$fileName}";
+            $to = "{$path}/t_{$fileName}";
         } else {
             // 生成目标文件目录
             $index = strrpos($to, '/');
@@ -139,11 +140,11 @@ class Thumb
         if ($replace) {
             if (filesize($from) > filesize($to)) {
                 unlink($from);
-                rename($to, $from);
+                return $to;
             } else {
                 unlink($to);
+                return $from;
             }
-            return $from;
         }
         return $to;
     }
