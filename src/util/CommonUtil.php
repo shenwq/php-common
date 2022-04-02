@@ -145,6 +145,35 @@ class CommonUtil
     }
 
     /**
+     * 是否是Weixin浏览器
+     * @return bool
+     */
+    public static function isWeixin(): bool
+    {
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否是手机
+     * @return bool
+     */
+    public static function isMobile(): bool
+    {
+        $regex_match = "/(nokia|iphone|android|motorola|^mot\-|softbank|foma|docomo|kddi|up\.browser|up\.link|"
+            . "htc|dopod|blazer|netfront|helio|hosin|huawei|novarra|CoolPad|webos|techfaith|palmsource|"
+            . "blackberry|alcatel|amoi|ktouch|nexian|samsung|^sam\-|s[cg]h|^lge|ericsson|philips|sagem|"
+            . "wellcom|bunjalloo|maui|symbian|smartphone|midp|wap|phone|windows ce|iemobile|^spice|^bird|"
+            . "^zte\-|longcos|pantech|gionee|^sie\-|portalmmm|jig\s browser|hiptop|^ucweb|^benq|haier|^lct|"
+            . "opera\s*mobi|opera\*mini|320x320|240x320|176x220)/i";
+        return isset($_SERVER['HTTP_X_WAP_PROFILE']) or isset($_SERVER['HTTP_PROFILE'])
+            or preg_match($regex_match, strtolower($_SERVER['HTTP_USER_AGENT']));
+    }
+
+    /**
      * 发送HTTP请求方法，目前只支持CURL发送请求
      * @param string $url 请求URL
      * @param array $param GET参数数组
