@@ -60,7 +60,7 @@ class RcsSmsApiTest extends TestCase
 
     public function testValidBlackList()
     {
-        $info = $this->api->validBlackList('18951234816');
+        $info = $this->api->validBlackList('18951234XXX');
         print_r($info);
         $this->assertEquals(0, $info['code']);
     }
@@ -79,7 +79,7 @@ class RcsSmsApiTest extends TestCase
 
     public function testSend()
     {
-        $info = $this->api->send('665c43a0fc544d73b4336ccbc412d8b4', '18951234816', '@1@=1793');
+        $info = $this->api->send('665c43a0fc544d73b4336ccbc412d8b4', '18951234XXX', '@1@=1793');
         print_r($info);
         $this->assertEquals(0, $info['code']);
     }
