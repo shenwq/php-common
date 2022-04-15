@@ -132,12 +132,12 @@ class RcsSmsApi
     private function post(string $url, array $data)
     {
         if (empty($url) || empty($data)) {
-            return false;
+            return ['code' => -1, 'msg' => '参数错误'];
         }
 
-        $o = "";
+        $o = '';
         foreach ($data as $k => $v) {
-            $o .= "$k=" . urlencode($v) . "&";
+            $o .= $k . '=' . urlencode($v) . '&';
         }
         $data = substr($o, 0, -1);
 
