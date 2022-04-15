@@ -111,11 +111,11 @@ class RcsSmsApi
     {
         // 签名认证 Md5(sid+apikey+tplid+mobile+content)
         $sign = md5($this->sid . $this->apiKey . $tplId . $mobile . $content);
-        $svr_url = $this->baseUrl . "/sms/sendtplsms.json"; // 服务器接口路径
+        $url = $this->baseUrl . "/sms/sendtplsms.json"; // 服务器接口路径
 
         // POST方式提交服务器
         $data = ['sign' => $sign, 'sid' => $this->sid, 'tplid' => $tplId, 'mobile' => $mobile, 'content' => $content, 'extno' => $extno];
-        $res = $this->post($svr_url, $data);
+        $res = $this->post($url, $data);
         return json_decode($res, true);
     }
 
