@@ -167,6 +167,31 @@ class CommonUtil
     }
 
     /**
+     * 是否是H5App
+     * @return bool
+     */
+    public static function isH5App(): bool
+    {
+        if (strpos($_SERVER['HTTP_USER_AGENT'], "Html5Plus") === false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 返回浏览器类型,app,wx,h5
+     * @return string
+     */
+    public static function browser(): string
+    {
+        if (self::isH5App()) {
+            return 'app';
+        }
+        return self::isWeixin() ? 'wx' : 'h5';
+    }
+
+    /**
      * 是否是手机
      * @return bool
      */
