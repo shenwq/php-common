@@ -32,20 +32,22 @@ class Thumb
      * 直接压缩原图，文件名必须以"/upload/"开始
      *  压缩后的图片会出现t_前缀
      * @param string $fileName
+     * @param bool $replace
      */
-    public static function compress(string $fileName)
+    public static function compress(string $fileName, bool $replace = true): string
     {
         $fileName = 'upload/' . self::getSubFileName($fileName);
-        return '/' . self::make($fileName, '', 0, 0, 1, true);
+        return '/' . self::make($fileName, '', 0, 0, 1, $replace);
     }
 
     /**
      * 将图片缩放到指定宽度，高度任意，文件名必须以"/upload/"开始
      * @param string $fileName
      * @param int $width
+     * @param bool $replace
      * @return 压缩后的文件名，文件名必须以"/thumb/w$width"开始
      */
-    public static function width(string $fileName, int $width, bool $replace = false)
+    public static function width(string $fileName, int $width, bool $replace = false): string
     {
         $subFileName = self::getSubFileName($fileName);
         if ($subFileName == '') {
@@ -57,10 +59,11 @@ class Thumb
     /**
      * 将图片缩放到指定高度，宽度任意，文件名必须以"/upload/"开始
      * @param string $fileName
-     * @param int $width
+     * @param int $height
+     * @param bool $replace
      * @return 压缩后的文件名，文件名必须以"/thumb/w$widthh$height"开始
      */
-    public static function height(string $fileName, int $height, bool $replace = false)
+    public static function height(string $fileName, int $height, bool $replace = false): string
     {
         $subFileName = self::getSubFileName($fileName);
         if ($subFileName == '') {
@@ -74,10 +77,18 @@ class Thumb
      * @param string $fileName
      * @param int $width
      * @param int $height
+     * @param bool $replace
      * @return 压缩后的文件名，文件名必须以"/thumb/h$height"开始
      */
-    public static function size(string $fileName, int $width, int $height, bool $replace = false)
+    public static function size(string $fileName, int $width = 0, int $height = 0, bool $replace = false): string
     {
+        if ($width == 0 && $height == 0) {
+            return self::compress($fileName, $replace);
+        } elseif ($width == 0) {
+            return self::height($fileName, $height, $replace);
+        } elseif ($height == 0) {
+            return self::width($fileName, $width, $replace);
+        }
         $subFileName = self::getSubFileName($fileName);
         if ($subFileName == '') {
             return $fileName;
@@ -85,7 +96,7 @@ class Thumb
         return '/' . self::make("upload/{$subFileName}", "thumb/w{$width}h{$height}/{$subFileName}", $width, $height, 4, $replace);
     }
 
-    private static function getSubFileName(string $fileName)
+    private static function getSubFileName(string $fileName): string
     {
         if (strpos($fileName, '/upload/') !== 0) {
             return '';
@@ -93,7 +104,7 @@ class Thumb
         return substr($fileName, 8);
     }
 
-    private static function make(string $from, string $to, int $width, int $height, int $type, bool $replace = false)
+    private static function make(string $from, string $to, int $width, int $height, int $type, bool $replace = false): string
     {
         // 不是压缩自己，存在已压缩文件直接返回
         if (!$replace && is_file($to)) {

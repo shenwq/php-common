@@ -55,3 +55,18 @@ if (!function_exists('isMobile')) {
         return \ffhome\common\util\CommonUtil::isMobile();
     }
 }
+
+if (!function_exists('thumb')) {
+    /**
+     * 压缩图片
+     * @param string $fileName
+     * @param int $width
+     * @param int $height
+     * @param bool $replace
+     * @return string
+     */
+    function thumb(string $fileName, int $width = 0, int $height = 0, bool $replace = false): string
+    {
+        return \ffhome\common\util\Thumb::size($fileName, $width, $height, $replace);
+    }
+}
