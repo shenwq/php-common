@@ -106,16 +106,18 @@ class Thumb
 
     private static function make(string $from, string $to, int $width, int $height, int $type, bool $replace = false): string
     {
+        $arr = explode('vendor', __DIR__);
+        $basePath = $arr[0] . 'public' . DIRECTORY_SEPARATOR;
         // 不是压缩自己，存在已压缩文件直接返回
-        if (!$replace && is_file($to)) {
+        if (!$replace && is_file($basePath . $to)) {
             return $to;
         }
 
         // 判断源文件是否是图片格式
-        if (!is_file($from)) {
+        if (!is_file($basePath . $from)) {
             return $from;
         }
-        $imageInfo = getimagesize($from);
+        $imageInfo = getimagesize($basePath . $from);
         if ($imageInfo === false) {
             return $from;
         }
@@ -133,27 +135,27 @@ class Thumb
             // 生成目标文件目录
             $index = strrpos($to, '/');
             $path = substr($to, 0, $index);
-            if (!is_dir($path)) {
-                mkdir($path, 0777, true);
+            if (!is_dir($basePath . $path)) {
+                mkdir($basePath . $path, 0777, true);
             }
         }
 
         // 压缩并保存文件
         $functions = [1 => 'imagecreatefromgif', 2 => 'imagecreatefromjpeg', 3 => 'imagecreatefrompng'];
-        $image = $functions[$imageInfo[2]]($from);
+        $image = $functions[$imageInfo[2]]($basePath . $from);
         $info = self::computeSize($width, $height, imagesx($image), imagesy($image), $type);
         $res = imagecreatetruecolor($info[0], $info[1]);
         imagecopyresampled($res, $image, 0, 0, 0, 0, $info[0], $info[1], $info[2], $info[3]);
         $functions = [1 => 'imagegif', 2 => 'imagejpeg', 3 => 'imagepng'];
-        $functions[$imageInfo[2]]($res, $to);
+        $functions[$imageInfo[2]]($res, $basePath . $to);
 
         //替换根据文件大小保留小的文件
         if ($replace) {
-            if (filesize($from) > filesize($to)) {
-                unlink($from);
+            if (filesize($basePath . $from) > filesize($basePath . $to)) {
+                unlink($basePath . $from);
                 return $to;
             } else {
-                unlink($to);
+                unlink($basePath . $to);
                 return $from;
             }
         }
