@@ -6,21 +6,21 @@ class Image
 {
     public static function blur($from, $blurFactor = 3)
     {
-        $arr = explode('.', $from);
-        $arr[count($arr) - 2] = $arr[count($arr) - 2] . '_blur';
-        $to = implode('.', $arr);
-
         $arr = explode('vendor', __DIR__);
         $basePath = $arr[0] . 'public';
-
-        // 存在模糊文件直接返回
-        if (is_file($basePath . $to)) {
-            return $to;
-        }
 
         // 无源文件
         if (!is_file($basePath . $from)) {
             return '';
+        }
+
+        $arr = explode('.', $from);
+        $arr[count($arr) - 2] = $arr[count($arr) - 2] . '_' . $blurFactor . '_blur';
+        $to = implode('.', $arr);
+
+        // 存在模糊文件直接返回
+        if (is_file($basePath . $to)) {
+            return $to;
         }
 
         $gdImageResource = self::image_create_from_ext($basePath . $from);
