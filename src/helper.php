@@ -100,6 +100,12 @@ if (!function_exists('getConstellation')) {
 }
 
 if (!function_exists('getBirthdayPet')) {
+    /**
+     * 获取生肖
+     *
+     * @param $year
+     * @return string
+     */
     function getBirthdayPet($year)
     {
         $year = intval($year);
