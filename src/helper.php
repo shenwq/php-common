@@ -70,3 +70,40 @@ if (!function_exists('thumb')) {
         return \ffhome\common\util\Thumb::size($fileName, $width, $height, $replace);
     }
 }
+
+if (!function_exists('getConstellation')) {
+    /**
+     * 获取指定日期对应星座
+     *
+     * @param integer $month 月份 1-12
+     * @param integer $day 日期 1-31
+     * @return boolean|string
+     */
+    function getConstellation($month, $day)
+    {
+        $day = intval($day);
+        $month = intval($month);
+        if ($month < 1 || $month > 12 || $day < 1 || $day > 31) return false;
+        $month--;
+        $signs = [
+            [20, '摩羯座'], [19, '宝瓶座'], [20, '双鱼座'], [20, '白羊座'],
+            [20, '金牛座'], [21, '双子座'], [23, '巨蟹座'], [23, '狮子座'],
+            [23, '处女座'], [23, '天秤座'], [22, '天蝎座'], [21, '射手座']
+        ];
+        list($start, $name) = $signs[$month];
+        if ($day > $start) {
+            $month++;
+            list($start, $name) = $signs[($month == 12) ? 0 : $month];
+        }
+        return $name;
+    }
+}
+
+if (!function_exists('getBirthdayPet')) {
+    function getBirthdayPet($year)
+    {
+        $year = intval($year);
+        $signs = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
+        return $signs[$year % 12];
+    }
+}
