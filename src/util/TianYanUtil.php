@@ -37,10 +37,9 @@ class TianYanUtil
      * @param string $name 姓名
      * @param string $idcard 身份证号
      * @param string $mobile 手机号码
-     * @return int  0 一致，收费  1 不一致，收费  2 无记录，不收费  3 访问失败
-     * @throws \HttpException
+     * @return array  [result:true表示对比成功，false表示对比失败,msg:错误信息]
      */
-    public function mobileThree(string $name, string $idcard, string $mobile): int
+    public function mobileThree(string $name, string $idcard, string $mobile): array
     {
         $param = $this->getSign();
         $param = array_merge($param, [
@@ -50,11 +49,19 @@ class TianYanUtil
         ]);
         $result = CommonUtil::http(self::BASE_URL . '/mobile_three/check', $param);
         if ($result['code'] == 200) {
-            return intval($result['data']['result']);
+            $ret = intval($result['data']['result']);
+            switch ($ret) {
+                case 0:
+                    return ['result' => true, 'msg' => '一致，收费'];
+                case 1:
+                    return ['result' => false, 'msg' => '不一致，收费'];
+                case 2:
+                    return ['result' => false, 'msg' => '无记录，不收费'];
+            }
         } else if ($result['code'] == 603) {
-            throw new \HttpException('接口余额不足请联系客服');
+            return ['result' => false, 'msg' => '接口余额不足请联系客服'];
         } else {
-            throw new \HttpException($result['msg']);
+            return ['result' => false, 'msg' => $result['msg']];
         }
     }
 
@@ -70,7 +77,6 @@ class TianYanUtil
      *                       只有 0.40以下 系统判断为不同人；
      *                       0.40-0.44 不能确定是否为同一人 ；
      *                       0.45及以上 系统判断为同一人]
-     * @throws \HttpException
      */
     public function faceIdCardByImage(string $name, string $idcard, string $path): array
     {
@@ -95,8 +101,8 @@ class TianYanUtil
      *                score:比较结果分值，0-1之间的小数，参考指标
      *                       只有 0.40以下 系统判断为不同人；
      *                       0.40-0.44 不能确定是否为同一人 ；
-     *                       0.45及以上 系统判断为同一人]
-     * @throws \HttpException
+     *                       0.45及以上 系统判断为同一人
+     *                msg:错误消息]
      */
     public function faceIdCardByUrl(string $name, string $idcard, string $url): array
     {
@@ -113,11 +119,13 @@ class TianYanUtil
     {
         $result = CommonUtil::http(self::BASE_URL . '/face_id_card/compare', [], $param, 'POST');
         if ($result['code'] == 200) {
-            return ['result' => ($result['data']['score'] > 0.45 && $result['data']['incorrect'] == 100), 'score' => $result['data']['score']];
+            return ['result' => ($result['data']['score'] > 0.45 && $result['data']['incorrect'] == 100),
+                'score' => $result['data']['score'],
+                'msg' => ''];
         } else if ($result['code'] == 603) {
-            throw new \HttpException('接口余额不足请联系客服');
+            return ['result' => false, 'score' => 0, 'msg' => '接口余额不足请联系客服'];
         } else {
-            throw new \HttpException($result['msg']);
+            return ['result' => false, 'score' => 0, 'msg' => $result['msg']];
         }
     }
 
