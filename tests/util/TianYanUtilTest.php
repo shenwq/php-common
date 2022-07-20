@@ -17,7 +17,7 @@ class TianYanUtilTest extends TestCase
 
     public function testMobileThree()
     {
-        $result = $this->util->mobileThree('房以祥', '320723199309263617', '13775197224');
+        $result = $this->util->mobileThree('姓名', '身份证号', '手机号码');
         $this->assertTrue($result['result']);
     }
 

@@ -11,7 +11,6 @@ namespace ffhome\common\util;
  */
 class TianYanUtil
 {
-    const SUCCESS = 0;
     const BASE_URL = 'https://api.shumaidata.com/v4';
     /**
      * appid
