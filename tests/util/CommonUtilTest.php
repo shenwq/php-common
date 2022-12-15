@@ -92,4 +92,20 @@ class CommonUtilTest extends TestCase
         $this->assertEquals('苏州', $ret['city']);
         print_r($ret);
     }
+
+    public function testImageAddBaseUrl()
+    {
+        $html = '<p>';
+        $html .= '<img alt="" src="/upload/20221207/001.jpg" />';
+        $html .= '<img alt="" src="/upload/20221207/002.jpg" style="height:1367px; width:900px" />';
+        $html .= '</p>';
+
+        $expected = '<p>';
+        $expected .= '<img alt="" src="http://test.ffhome.top/upload/20221207/001.jpg" />';
+        $expected .= '<img alt="" src="http://test.ffhome.top/upload/20221207/002.jpg" style="height:1367px; width:900px" />';
+        $expected .= '</p>';
+
+        $ret = CommonUtil::imageAddBaseUrl($html, 'http://test.ffhome.top');
+        $this->assertEquals($expected, $ret);
+    }
 }

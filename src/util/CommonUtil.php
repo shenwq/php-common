@@ -154,6 +154,18 @@ class CommonUtil
     }
 
     /**
+     * HTML的文本中图片链接增加域名
+     * @param string $html 原始html
+     * @param string $baseUrl 域名
+     * @return string 替换后的html
+     */
+    public static function imageAddBaseUrl(string $html, string $baseUrl): string
+    {
+        $preg = '#(src|href|url)(=[\'|\"]|\()((?!http:\/\/)[\/]?(.*?)\.(jpg|png|gif|jpeg))([\'|\"]|\))#i';
+        return preg_replace($preg, "$1$2" . $baseUrl . "$3$6", $html);
+    }
+
+    /**
      * 是否是Weixin浏览器
      * @return bool
      */
