@@ -108,4 +108,20 @@ class CommonUtilTest extends TestCase
         $ret = CommonUtil::imageAddBaseUrl($html, 'http://test.ffhome.top');
         $this->assertEquals($expected, $ret);
     }
+
+    public function testModifyImageWidth()
+    {
+        $html = '<p>';
+        $html .= '<img alt="" src="/upload/20221207/001.jpg" style="height:1367px; width:900px" />';
+        $html .= '<img alt="" src="/upload/20221207/002.jpg" style="height:1367px; width:900px" />';
+        $html .= '</p>';
+
+        $expected = '<p>';
+        $expected .= '<img alt="" src="/upload/20221207/001.jpg" width="100%" />';
+        $expected .= '<img alt="" src="/upload/20221207/002.jpg" width="100%" />';
+        $expected .= '</p>';
+
+        $ret = CommonUtil::modifyImageWidth($html);
+        $this->assertEquals($expected, $ret);
+    }
 }

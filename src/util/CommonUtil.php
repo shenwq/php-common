@@ -166,6 +166,22 @@ class CommonUtil
     }
 
     /**
+     * HTML的文本中图片修改宽度
+     * @param string $html 原始html
+     * @param string $replaced 替换后的结果，可参照默认参数
+     * @return string 替换后的html
+     */
+    public static function modifyImageWidth(string $html, string $replaced = '$1width="100%"'): string
+    {
+        return preg_replace(
+            [
+                '/(<img [^<>]*?)width=.+?[\'|\"]/',
+                '/(<img.*?)((height)=[\'"]+[0-9|%]+[\'"]+)/',
+                '/(<img.*?)((style)=[\'"]+(.*?)+[\'"]+)/',
+            ], [$replaced, $replaced, $replaced], $html);
+    }
+
+    /**
      * 是否是Weixin浏览器
      * @return bool
      */
