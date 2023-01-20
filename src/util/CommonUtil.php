@@ -31,6 +31,16 @@ class CommonUtil
     }
 
     /**
+     * 手机号码模糊处理
+     * @param string $mobile 手机号码
+     * @return string 模糊的手机号码
+     */
+    public static function mobileBlur(string $mobile): string
+    {
+        return substr($mobile, 0, 3) . '*****' . substr($mobile, -3, 3);
+    }
+
+    /**
      * 将list转换成树形结构
      * @param array $list
      * @param int $rootId 根id

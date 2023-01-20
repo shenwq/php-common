@@ -19,6 +19,11 @@ class CommonUtilTest extends TestCase
         $this->assertEquals('我是John,年龄:32', CommonUtil::formatText('我是{$name},年龄:{$age}', ['name' => 'John', 'age' => 32]));
     }
 
+    public function testMobileBlur()
+    {
+        $this->assertEquals('189*****816', CommonUtil::mobileBlur('18951234816'));
+    }
+
     public function testGetTree()
     {
         $param = [
