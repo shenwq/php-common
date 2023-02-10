@@ -129,4 +129,15 @@ class CommonUtilTest extends TestCase
         $ret = CommonUtil::modifyImageWidth($html);
         $this->assertEquals($expected, $ret);
     }
+
+    public function testSync()
+    {
+        for ($i = 1; $i <= 5; $i++) {
+            CommonUtil::sync(__DIR__ . DIRECTORY_SEPARATOR . 'test.txt', function () use ($i) {
+                echo $i . "\n";
+                sleep(1);
+            });
+        }
+        $this->assertTrue(true);
+    }
 }

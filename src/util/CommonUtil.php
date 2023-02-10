@@ -291,6 +291,21 @@ class CommonUtil
     }
 
     /**
+     * 使用文件阻塞功能实现同步处理
+     * @param string $filename 文件名称(全路径)
+     * @param \Closure $fn 同步处理方法
+     */
+    public static function sync(string $filename, \Closure $fn): void
+    {
+        $fp = fopen($filename, 'w');
+        if (flock($fp, LOCK_EX)) {
+            $fn();
+            flock($fp, LOCK_UN);
+        }
+        fclose($fp);
+    }
+
+    /**
      * 导出Word,html格式
      * @param string $content 内容
      * @param string $fileName 文件名
