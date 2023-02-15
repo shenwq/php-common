@@ -294,15 +294,18 @@ class CommonUtil
      * 使用文件阻塞功能实现同步处理
      * @param string $filename 文件名称(全路径)
      * @param \Closure $fn 同步处理方法
+     * @return mixed|null 返回方法的返回值
      */
-    public static function sync(string $filename, \Closure $fn): void
+    public static function sync(string $filename, \Closure $fn)
     {
+        $ret = null;
         $fp = fopen($filename, 'w');
         if (flock($fp, LOCK_EX)) {
-            $fn();
+            $ret = $fn();
             flock($fp, LOCK_UN);
         }
         fclose($fp);
+        return $ret;
     }
 
     /**

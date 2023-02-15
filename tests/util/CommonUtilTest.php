@@ -133,9 +133,10 @@ class CommonUtilTest extends TestCase
     public function testSync()
     {
         for ($i = 1; $i <= 5; $i++) {
-            CommonUtil::sync(__DIR__ . DIRECTORY_SEPARATOR . 'test.txt', function () use ($i) {
-                echo $i . "\n";
+            echo CommonUtil::sync(__DIR__ . DIRECTORY_SEPARATOR . 'test.txt', function () use ($i) {
+                echo "{$i}\n";
                 sleep(1);
+                return "return {$i}\n";
             });
         }
         $this->assertTrue(true);
