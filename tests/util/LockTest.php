@@ -12,7 +12,7 @@ class LockTest extends TestCase
     public function testSync()
     {
         for ($i = 1; $i <= 5; $i++) {
-            $lock = new Lock(__DIR__ . DIRECTORY_SEPARATOR . 'test.txt');
+            $lock = new Lock(__DIR__ . DIRECTORY_SEPARATOR . 'test.txt', false);
             echo "{$i}\n";
             sleep(1);
             $lock->unlock();

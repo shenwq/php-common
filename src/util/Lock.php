@@ -15,9 +15,13 @@ class Lock
     /**
      * 构造方法，调用即加锁
      * @param string $filename 文件名称
+     * * @param bool $relative 是否是相对路径
      */
-    public function __construct(string $filename)
+    public function __construct(string $filename, bool $relative = true)
     {
+        if ($relative && function_exists('runtime_path')) {
+            $filename = runtime_path() . $filename . '.txt';
+        }
         $this->fp = fopen($filename, 'w');
         $this->lock = flock($this->fp, LOCK_EX);
     }
