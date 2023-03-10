@@ -106,10 +106,24 @@ if (!function_exists('getBirthdayPet')) {
      * @param $year
      * @return string
      */
-    function getBirthdayPet($year)
+    function getBirthdayPet($year): string
     {
         $year = intval($year);
         $signs = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
         return $signs[$year % 12];
+    }
+}
+
+if (!function_exists('timeFormat')) {
+    /**
+     * 将00:00:00的时间格式化成00:00
+     *
+     * @param $time
+     * @return string
+     */
+    function timeFormat($time): string
+    {
+        if (empty($time)) return '';
+        return substr($time, 0, -3);
     }
 }
