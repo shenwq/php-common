@@ -70,6 +70,17 @@ class DaDa
         return self::post('/api/shop/add', $data);
     }
 
+    /**
+     * 更新门店
+     * @param array $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function updateShop(array $data)
+    {
+        return self::post('/api/shop/update', $data);
+    }
+
     private function post(string $url, array $body)
     {
         $data = [

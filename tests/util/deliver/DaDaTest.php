@@ -46,4 +46,15 @@ class DaDaTest extends TestCase
         print_r($info);
         $this->assertEquals(0, $info['code']);
     }
+
+    public function testUpdateShop()
+    {
+        $data = [
+            'origin_shop_id' => 'shop1',
+            'station_name' => '义起火烧一起行',
+        ];
+        $info = $this->api->updateShop($data);
+        print_r($info);
+        $this->assertEquals(0, $info['code']);
+    }
 }
