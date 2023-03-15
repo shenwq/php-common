@@ -92,6 +92,17 @@ class DaDa
         return self::post('/api/order/queryDeliverFee', $data);
     }
 
+    /**
+     * 查询运费后下单
+     * @param string $deliveryNo 平台订单编号
+     * @return mixed
+     * @throws \Exception
+     */
+    public function addOrderAfterQuery(string $deliveryNo)
+    {
+        return self::post('/api/order/addAfterQuery', ['deliveryNo' => $deliveryNo]);
+    }
+
     private function post(string $url, array $body)
     {
         $data = [
