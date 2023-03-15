@@ -25,7 +25,24 @@ class DaDaTest extends TestCase
 
     public function testGetShopDetail()
     {
-        $info = $this->api->getShopDetail('77accb60d74c4a89');
+        $info = $this->api->getShopDetail('shop1');
+        print_r($info);
+        $this->assertEquals(0, $info['code']);
+    }
+
+    public function testAddShops()
+    {
+        $data = [[
+            'station_name' => '义起火烧 一起行',
+            'business' => 29,
+            'station_address' => '江苏省常州市天宁区大润发（永宁店）二楼',
+            'lng' => 119.974174,
+            'lat' => 31.792744,
+            'contact_name' => 'XXX',
+            'phone' => 'XXXXXXXXXXX',
+            'origin_shop_id' => 'shop1',
+        ]];
+        $info = $this->api->addShops($data);
         print_r($info);
         $this->assertEquals(0, $info['code']);
     }

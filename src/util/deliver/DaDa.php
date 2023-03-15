@@ -59,6 +59,17 @@ class DaDa
         return self::post('/api/shop/detail', ['origin_shop_id' => $shopId]);
     }
 
+    /**
+     * 创建门店
+     * @param array $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function addShops(array $data)
+    {
+        return self::post('/api/shop/add', $data);
+    }
+
     private function post(string $url, array $body)
     {
         $data = [
