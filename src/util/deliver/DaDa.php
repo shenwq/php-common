@@ -81,6 +81,17 @@ class DaDa
         return self::post('/api/shop/update', $data);
     }
 
+    /**
+     * 查询运费
+     * @param array $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function queryDeliverFee(array $data)
+    {
+        return self::post('/api/order/queryDeliverFee', $data);
+    }
+
     private function post(string $url, array $body)
     {
         $data = [
