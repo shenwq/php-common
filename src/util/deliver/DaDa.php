@@ -44,7 +44,6 @@ class DaDa
     /**
      * 查询城市码
      * @return mixed
-     * @throws \Exception
      */
     public function listCityCode()
     {
@@ -55,7 +54,6 @@ class DaDa
      * 查询门店详情
      * @param $shopId
      * @return mixed 门店编码
-     * @throws \Exception
      */
     public function getShopDetail($shopId)
     {
@@ -66,7 +64,6 @@ class DaDa
      * 创建门店
      * @param array $data
      * @return mixed
-     * @throws \Exception
      */
     public function addShops(array $data)
     {
@@ -77,7 +74,6 @@ class DaDa
      * 更新门店
      * @param array $data
      * @return mixed
-     * @throws \Exception
      */
     public function updateShop(array $data)
     {
@@ -88,7 +84,6 @@ class DaDa
      * 查询运费
      * @param array $data
      * @return mixed
-     * @throws \Exception
      */
     public function queryDeliverFee(array $data)
     {
@@ -99,7 +94,6 @@ class DaDa
      * 直接下单
      * @param array $data
      * @return mixed
-     * @throws \Exception
      */
     public function addOrder(array $data)
     {
@@ -110,7 +104,6 @@ class DaDa
      * 查询运费后下单
      * @param string $deliveryNo 平台订单编号
      * @return mixed
-     * @throws \Exception
      */
     public function addOrderAfterQuery(string $deliveryNo)
     {
@@ -149,7 +142,9 @@ class DaDa
         $data = curl_exec($ch);
         $error = curl_error($ch);
         curl_close($ch);
-        if ($error) throw new \Exception('请求发生错误：' . $error);
+        if ($error) {
+            return ['code' => -2, 'msg' => '请求发生错误：' . $error];
+        }
         $data = json_decode($data, true);
         return $data;
     }
