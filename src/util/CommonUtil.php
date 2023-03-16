@@ -246,6 +246,17 @@ class CommonUtil
     }
 
     /**
+     * 生成唯一的ID  (毫秒+5位随机数)转36进制
+     * @param string $prefix 前缀
+     * @return string
+     */
+    public static function uuid($prefix = ''): string
+    {
+        return (!empty($prefix) ? $prefix . '_' : '')
+            . base_convert(round(microtime(true) * 1000) . mt_rand(10000, 99999), 10, 36);
+    }
+
+    /**
      * 发送HTTP请求方法，目前只支持CURL发送请求
      * @param string $url 请求URL
      * @param array $param GET参数数组
