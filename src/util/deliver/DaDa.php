@@ -3,8 +3,6 @@ declare (strict_types=1);
 
 namespace ffhome\common\util\deliver;
 
-use ffhome\common\util\CommonUtil;
-
 /**
  * 达达快递接口
  * Class DaDa
@@ -12,6 +10,11 @@ use ffhome\common\util\CommonUtil;
  */
 class DaDa
 {
+    /**
+     * 成功返回码
+     */
+    const SUCCESS = 0;
+
     private $appKey;
     private $appSecret;
     /**

@@ -20,14 +20,14 @@ class DaDaTest extends TestCase
     {
         $info = $this->api->listCityCode();
         echo count($info['result']);
-        $this->assertEquals(0, $info['code']);
+        $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }
 
     public function testGetShopDetail()
     {
         $info = $this->api->getShopDetail('shop1');
         print_r($info);
-        $this->assertEquals(0, $info['code']);
+        $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }
 
     public function testAddShops()
@@ -44,7 +44,7 @@ class DaDaTest extends TestCase
         ]];
         $info = $this->api->addShops($data);
         print_r($info);
-        $this->assertEquals(0, $info['code']);
+        $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }
 
     public function testUpdateShop()
@@ -55,7 +55,7 @@ class DaDaTest extends TestCase
         ];
         $info = $this->api->updateShop($data);
         print_r($info);
-        $this->assertEquals(0, $info['code']);
+        $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }
 
     public function testQueryDeliverFee()
@@ -75,13 +75,13 @@ class DaDaTest extends TestCase
         ];
         $info = $this->api->queryDeliverFee($data);
         print_r($info);
-        $this->assertEquals(0, $info['code']);
+        $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }
 
     public function testAddOrderAfterQuery()
     {
         $info = $this->api->addOrderAfterQuery('Dada55ec3a322f4b4dd3b7e74359dc400e83');
         print_r($info);
-        $this->assertEquals(0, $info['code']);
+        $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }
 }
