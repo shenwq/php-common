@@ -84,4 +84,24 @@ class DaDaTest extends TestCase
         print_r($info);
         $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }
+
+    public function testAddOrder()
+    {
+        $data = [
+            'shop_no' => 'shop1',
+            'origin_id' => '100001',
+            'cargo_price' => 65.5,
+            'is_prepay' => 0,
+            'receiver_name' => '沈先生',
+            'receiver_phone' => '18951234816',
+            'receiver_address' => '江苏省常州市天宁区翠竹新村119幢甲单元102',
+            'callback' => 'https://mall-api.XXXXX.cn/leaguer/callback/dada',
+            'cargo_weight' => 1,
+            'receiver_lat' => 31.79,
+            'receiver_lng' => 119.98,
+        ];
+        $info = $this->api->addOrder($data);
+        print_r($info);
+        $this->assertEquals(DaDa::SUCCESS, $info['code']);
+    }
 }

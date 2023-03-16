@@ -96,6 +96,17 @@ class DaDa
     }
 
     /**
+     * 直接下单
+     * @param array $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function addOrder(array $data)
+    {
+        return self::post('/api/order/addOrder', $data);
+    }
+
+    /**
      * 查询运费后下单
      * @param string $deliveryNo 平台订单编号
      * @return mixed
