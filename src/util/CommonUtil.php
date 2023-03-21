@@ -255,14 +255,39 @@ class CommonUtil
         if (empty($agent)) {
             $agent = $_SERVER['HTTP_USER_AGENT'];
         }
-        $agent = strtolower($agent);
-        if (strpos($agent, 'iphone') || strpos($agent, 'ipad')) {
+        if (strpos($agent, 'iPhone') || strpos($agent, 'iPad')) {
             return 'ios';
         }
-        if (strpos($agent, 'android')) {
+        if (strpos($agent, 'Android')) {
             return 'android';
         }
         return 'other';
+    }
+
+    /**
+     * 根据user-agent获取浏览器名称
+     * @param string $agent
+     * @return string
+     */
+    public static function getBrowserName($agent = '')
+    {
+        if (empty($agent)) {
+            $agent = $_SERVER['HTTP_USER_AGENT'];
+        }
+        if (strpos($agent, 'MicroMessenger') !== false)
+            return "weixin";
+        else if (strpos($agent, 'MSIE') !== false || strpos($agent, 'rv:11.0')) //ie11判断
+            return "ie";
+        else if (strpos($agent, 'Firefox') !== false)
+            return "firefox";
+        else if (strpos($agent, 'Chrome') !== false)
+            return "chrome";
+        else if (strpos($agent, 'Opera') !== false)
+            return 'opera';
+        else if (strpos($agent, 'Chrome') == false && strpos($agent, 'Safari') !== false)
+            return 'safari';
+        else
+            return 'unknown';
     }
 
     /**
