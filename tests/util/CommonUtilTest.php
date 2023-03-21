@@ -24,6 +24,14 @@ class CommonUtilTest extends TestCase
         $this->assertEquals('189*****816', CommonUtil::mobileBlur('18951234816'));
     }
 
+    public function testGetOsName()
+    {
+        $this->assertEquals('ios', CommonUtil::getOsName('Mozilla/5.0 (iPad; CPU OS 9_3_5 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13G36 Safari/601.1'));
+        $this->assertEquals('ios', CommonUtil::getOsName('Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'));
+        $this->assertEquals('android', CommonUtil::getOsName('Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36'));
+        $this->assertEquals('other', CommonUtil::getOsName('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'));
+    }
+
     public function testGetTree()
     {
         $param = [

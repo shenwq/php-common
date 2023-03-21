@@ -246,6 +246,26 @@ class CommonUtil
     }
 
     /**
+     * 根据user-agent获取OS名称
+     * @param string $agent
+     * @return string ios/android/other
+     */
+    public static function getOsName($agent = ''): string
+    {
+        if (empty($agent)) {
+            $agent = $_SERVER['HTTP_USER_AGENT'];
+        }
+        $agent = strtolower($agent);
+        if (strpos($agent, 'iphone') || strpos($agent, 'ipad')) {
+            return 'ios';
+        }
+        if (strpos($agent, 'android')) {
+            return 'android';
+        }
+        return 'other';
+    }
+
+    /**
      * 生成唯一的ID  (毫秒+5位随机数)转36进制
      * @param string $prefix 前缀
      * @return string
