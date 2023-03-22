@@ -104,4 +104,10 @@ class DaDaTest extends TestCase
         print_r($info);
         $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }
+
+    public function testGetOrderDetail(){
+        $info = $this->api->getOrderDetail(100012);
+        print_r($info);
+        $this->assertEquals(DaDa::SUCCESS, $info['code']);
+    }
 }

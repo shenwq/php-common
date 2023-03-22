@@ -15,6 +15,43 @@ class DaDa
      */
     const SUCCESS = 0;
 
+    /**
+     * 快递状态：未使用快递
+     */
+    const S_UN_USE = -1;
+    /**
+     * 快递状态：待接单
+     */
+    const S_WAITING_RECEIVE_ORDER = 1;
+    /**
+     * 快递状态：待取货
+     */
+    const S_WAITING_TAKE_GOODS = 2;
+    /**
+     * 快递状态：配送中
+     */
+    const S_SENDING = 3;
+    /**
+     * 快递状态：已完成
+     */
+    const S_COMPLETED = 4;
+    /**
+     * 快递状态：订单取消
+     */
+    const S_CANCELED = 5;
+    /**
+     * 快递状态：投递异常，返还中
+     */
+    const S_BACKING = 9;
+    /**
+     * 快递状态：返还完成
+     */
+    const S_BACK = 10;
+    /**
+     * 快递状态：已到店
+     */
+    const S_ARRIVE_SHOP = 100;
+
     private $appKey;
     private $appSecret;
     /**
@@ -108,6 +145,16 @@ class DaDa
     public function addOrderAfterQuery(string $deliveryNo)
     {
         return self::post('/api/order/addAfterQuery', ['deliveryNo' => $deliveryNo]);
+    }
+
+    /**
+     * 查询订单明细
+     * @param $orderId
+     * @return mixed
+     */
+    public function getOrderDetail($orderId)
+    {
+        return self::post('/api/order/status/query', ['order_id' => $orderId]);
     }
 
     private function post(string $url, array $body)
