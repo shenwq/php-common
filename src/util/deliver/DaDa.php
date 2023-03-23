@@ -14,6 +14,10 @@ class DaDa
      * 成功返回码
      */
     const SUCCESS = 0;
+    /**
+     * 签名检测失败
+     */
+    const FAIL_CHECK_SIGNATURE = -2;
 
     /**
      * 快递状态：未使用快递
@@ -76,6 +80,22 @@ class DaDa
         $this->appKey = $appKey;
         $this->appSecret = $appSecret;
         $this->baseUrl = $isTest ? 'https://newopen.qa.imdada.cn' : 'https://newopen.imdada.cn';
+    }
+
+    /**
+     * 回调方法中检查签名是否正确，正确就调用fn方法
+     * @param $param
+     * @param \Closure $fn
+     * @return mixed fn方法的返回值
+     */
+    public static function checkSignature($param, \Closure $fn)
+    {
+        $arr = [$param['client_id'], $param['order_id'], $param['update_time']];
+        sort($arr, SORT_STRING);
+        if (md5(join('', $arr)) == $param['signature']) {
+            return $fn();
+        }
+        return self::FAIL_CHECK_SIGNATURE;
     }
 
     /**

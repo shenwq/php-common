@@ -5,6 +5,7 @@ namespace ffhome\tests\common\util\deliver;
 
 use ffhome\common\util\deliver\DaDa;
 use PHPUnit\Framework\TestCase;
+use function foo\func;
 
 
 class DaDaTest extends TestCase
@@ -14,6 +15,32 @@ class DaDaTest extends TestCase
     protected function setUp()
     {
         $this->api = new DaDa('XXXXXXXX', 'XXXXXXXXXXXXX', 'XXXXXXXXXXXXXXXXXX', true);
+    }
+
+    public function testCheckSignatureOK()
+    {
+        $ret = DaDa::checkSignature([
+            'client_id' => '1464707142796312576',
+            'order_id' => '100015',
+            'update_time' => 1679552742,
+            'signature' => 'bce7fc5b30227433f87001e6a82c81f8'
+        ], function () {
+            return DaDa::SUCCESS;
+        });
+        $this->assertEquals(DaDa::SUCCESS, $ret);
+    }
+
+    public function testCheckSignatureFail()
+    {
+        $ret = DaDa::checkSignature([
+            'client_id' => '1464707142796312576',
+            'order_id' => '100015',
+            'update_time' => 1679552742,
+            'signature' => 'bce7fc5b30227433f87001e6a82c8f18'
+        ], function () {
+            return DaDa::SUCCESS;
+        });
+        $this->assertEquals(DaDa::FAIL_CHECK_SIGNATURE, $ret);
     }
 
     public function testListCityCode()
@@ -105,7 +132,8 @@ class DaDaTest extends TestCase
         $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }
 
-    public function testGetOrderDetail(){
+    public function testGetOrderDetail()
+    {
         $info = $this->api->getOrderDetail(100012);
         print_r($info);
         $this->assertEquals(DaDa::SUCCESS, $info['code']);
