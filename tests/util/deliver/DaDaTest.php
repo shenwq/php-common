@@ -5,8 +5,6 @@ namespace ffhome\tests\common\util\deliver;
 
 use ffhome\common\util\deliver\DaDa;
 use PHPUnit\Framework\TestCase;
-use function foo\func;
-
 
 class DaDaTest extends TestCase
 {
