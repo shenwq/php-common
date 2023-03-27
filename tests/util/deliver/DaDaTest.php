@@ -11,6 +11,7 @@ use function foo\func;
 class DaDaTest extends TestCase
 {
     protected $api;
+    const ORDER_ID = 1001;
 
     protected function setUp()
     {
@@ -21,9 +22,9 @@ class DaDaTest extends TestCase
     {
         $ret = DaDa::checkSignature([
             'client_id' => '1464707142796312576',
-            'order_id' => '100015',
+            'order_id' => self::ORDER_ID,
             'update_time' => 1679552742,
-            'signature' => 'bce7fc5b30227433f87001e6a82c81f8'
+            'signature' => 'c485c170f7bf0293cb2ef6c9fa96847f'
         ], function () {
             return DaDa::SUCCESS;
         });
@@ -34,9 +35,9 @@ class DaDaTest extends TestCase
     {
         $ret = DaDa::checkSignature([
             'client_id' => '1464707142796312576',
-            'order_id' => '100015',
+            'order_id' => self::ORDER_ID,
             'update_time' => 1679552742,
-            'signature' => 'bce7fc5b30227433f87001e6a82c8f18'
+            'signature' => 'c485c170f7bf0293cb2ef6c9fa96848f'
         ], function () {
             return DaDa::SUCCESS;
         });
@@ -89,7 +90,7 @@ class DaDaTest extends TestCase
     {
         $data = [
             'shop_no' => 'shop1',
-            'origin_id' => '100001',
+            'origin_id' => self::ORDER_ID,
             'cargo_price' => 65.5,
             'is_prepay' => 0,
             'receiver_name' => '沈先生',
@@ -116,7 +117,7 @@ class DaDaTest extends TestCase
     {
         $data = [
             'shop_no' => 'shop1',
-            'origin_id' => '100001',
+            'origin_id' => self::ORDER_ID,
             'cargo_price' => 65.5,
             'is_prepay' => 0,
             'receiver_name' => '沈先生',
@@ -132,9 +133,16 @@ class DaDaTest extends TestCase
         $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }
 
+    public function testCancelOrder()
+    {
+        $info = $this->api->cancelOrder(self::ORDER_ID);
+        print_r($info);
+        $this->assertEquals(DaDa::SUCCESS, $info['code']);
+    }
+
     public function testGetOrderDetail()
     {
-        $info = $this->api->getOrderDetail(100012);
+        $info = $this->api->getOrderDetail(self::ORDER_ID);
         print_r($info);
         $this->assertEquals(DaDa::SUCCESS, $info['code']);
     }

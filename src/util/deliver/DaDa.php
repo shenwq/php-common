@@ -158,6 +158,22 @@ class DaDa
     }
 
     /**
+     * 取消订单
+     * @param $orderId 第三方订单编号
+     * @param int $cancelReasonId 取消原因，4（默认）顾客取消订单
+     * @param string $cancelReason 取消原因
+     * @return array|mixed
+     */
+    public function cancelOrder($orderId, $cancelReasonId = 4, $cancelReason = '')
+    {
+        $data = ['order_id' => $orderId, 'cancel_reason_id' => $cancelReasonId];
+        if (!empty($cancelReason)) {
+            $data['cancel_reason'] = $cancelReason;
+        }
+        return self::post('/api/order/formalCancel', $data);
+    }
+
+    /**
      * 查询运费后下单
      * @param string $deliveryNo 平台订单编号
      * @return mixed
@@ -169,7 +185,7 @@ class DaDa
 
     /**
      * 查询订单明细
-     * @param $orderId
+     * @param $orderId 第三方订单编号
      * @return mixed
      */
     public function getOrderDetail($orderId)
