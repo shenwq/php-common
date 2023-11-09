@@ -56,4 +56,12 @@ class DateUtil
         if (empty($time)) return '';
         return substr($time, 0, -3);
     }
+
+    const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+
+    public static function week($date): string
+    {
+        if (empty($date)) return '';
+        return self::WEEK[date('w', strtotime($date))];
+    }
 }

@@ -31,4 +31,12 @@ class DateUtilTest extends TestCase
         $this->assertEquals('', DateUtil::timeFormat(''));
         $this->assertEquals('12:00', DateUtil::timeFormat('12:00:00'));
     }
+
+    public function testWeek()
+    {
+        $this->assertEquals('', DateUtil::week(''));
+        $this->assertEquals('日', DateUtil::week('2023-10-1'));
+        $this->assertEquals('三', DateUtil::week('2023-11-1'));
+        $this->assertEquals('五', DateUtil::week('2023-12-1'));
+    }
 }
