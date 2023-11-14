@@ -73,6 +73,28 @@ class CommonUtil
     }
 
     /**
+     * 将列表转换成Map格式
+     * @param array $list 数组
+     * @param string $key key的键名
+     * @return array
+     */
+    public static function convertToMap(array $list, string $key): array
+    {
+        if (empty($list) || empty($key)) {
+            return [];
+        }
+        $ret = [];
+        foreach ($list as $item) {
+            if (isset($ret[$item[$key]])) {
+                $ret[$item[$key]][] = $item;
+            } else {
+                $ret[$item[$key]] = [$item];
+            }
+        }
+        return $ret;
+    }
+
+    /**
      * 将list的数组进行转换
      * @param array $list 数组
      * @param string $val 值的键名

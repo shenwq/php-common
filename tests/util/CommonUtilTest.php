@@ -61,6 +61,23 @@ class CommonUtilTest extends TestCase
         $this->assertEquals($result, $ret);
     }
 
+    public function testConvertToMap()
+    {
+        $param = [
+            ['id' => 1, 'pid' => 0, 'name' => '市场部'],
+            ['id' => 2, 'pid' => 0, 'name' => '运营部'],
+            ['id' => 3, 'pid' => 1, 'name' => '市场一部'],
+            ['id' => 4, 'pid' => 1, 'name' => '市场二部'],
+        ];
+        $result = [0 => [['id' => 1, 'pid' => 0, 'name' => '市场部'],
+            ['id' => 2, 'pid' => 0, 'name' => '运营部'],],
+            1 => [['id' => 3, 'pid' => 1, 'name' => '市场一部'],
+                ['id' => 4, 'pid' => 1, 'name' => '市场二部'],]];
+        $ret = CommonUtil::convertToMap($param, 'pid');
+        $this->assertCount(2, $ret);
+        $this->assertEquals($result, $ret);
+    }
+
     public function testConvertToArray()
     {
         $param = [
